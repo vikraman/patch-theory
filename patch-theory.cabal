@@ -17,6 +17,7 @@ library
                      , Data.Patch.Merge
                      , Data.Patch.Commute
                      , Data.Patch.Instances
+                     , Data.Patch.Instances.Eq
   other-extensions:    GADTs
                      , MultiParamTypeClasses
                      , FlexibleInstances
