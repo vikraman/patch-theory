@@ -1,0 +1,25 @@
+name:                patch-theory
+version:             0.1.0.0
+synopsis:            A naive patch theory implementation
+homepage:            http://hub.darcs.net/vikraman/patch-theory
+license:             GPL-2
+license-file:        LICENSE
+author:              Vikraman Choudhury
+maintainer:          vikraman@cse.iitk.ac.in
+category:            Development
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  exposed-modules:     Data.Patch
+                     , Data.Patch.Invert
+                     , Data.Patch.Merge
+                     , Data.Patch.Commute
+                     , Data.Patch.Instances
+  other-extensions:    GADTs
+                     , MultiParamTypeClasses
+                     , FlexibleInstances
+                     , UndecidableInstances
+  build-depends:       base >=4.6 && <4.7
+  default-language:    Haskell2010
