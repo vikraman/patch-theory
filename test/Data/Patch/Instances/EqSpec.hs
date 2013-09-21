@@ -3,20 +3,18 @@
 
 module Data.Patch.Instances.EqSpec where
 
+import Data.Maybe
+
 import Data.Patch.Commute
 import Data.Patch.Instances.Eq
 import Data.Patch.Invert
 import Test.Hspec
 
-instance Show a => Show (Primitive a from to)
-
-instance (Show (p from mid), Show (q mid to)) => Show (Then p q from to)
+instance Show (Primitive a from to)
+instance Show (Then p q from to)
 
 instance Eq a => Eq (Primitive a from to) where
   (==) (Change x y) (Change x' y') = x == x' && y == y'
-
--- instance (Eq (p from mid), Eq (q mid to)) => Eq (Then p q from to) where
---   (==) (Then p q) (Then p' q') = p == p' && q == q'
 
 spec :: Spec
 spec = do
@@ -25,12 +23,12 @@ spec = do
       let c  = Change 'a' 'b'
       let c' = Change 'b' 'a'
       invert c `shouldBe` c'
-  -- describe "commute" $ do
-  --   it "should commute two commutable changes" $ do
-  --     let c  = Change 'a' 'b'
-  --     let c' = Change 'b' 'c'
-  --     commute (Then c c') `shouldBe` (Just $ Then c' c)
-  --   it "should fail to commute two non-commutable changes" $ do
-  --     let c  = Change 'a' 'b'
-  --     let c' = Change 'c' 'd'
-  --     commute (Then c c') `shouldBe` Nothing
+  describe "commute" $ do
+    it "should commute two commutable changes" $ do
+      let c  = Change 'a' 'b'
+      let c' = Change 'b' 'c'
+      commute (Then c c') `shouldSatisfy` isJust
+    it "should fail to commute two non-commutable changes" $ do
+      let c  = Change 'a' 'b'
+      let c' = Change 'c' 'd'
+      commute (Then c c') `shouldSatisfy` isNothing
